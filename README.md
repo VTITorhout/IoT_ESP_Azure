@@ -33,8 +33,8 @@ The code should work with only a few changes, mainly in the `config.h` file:
 All settings can be found in the [Azure Portal](https://azure.microsoft.com/nl-nl/features/azure-portal/). 
 
 ## Future releases
-- [] Wired ethernet on the ESP32: The ESP32 has an inbuild MAC which does only need an external PHY. Using a MAC+PHY (as the Wiz5500) gives problems with the default libraries. An altered version of the code is currently being tested and will be merged with the tree if found working.
-- [] SSL store: The given code uses http**s**. Every time a message thas to be transmitted or received through Azure, the certificate is checked. This certificate is saved in the header file of the azure code.
+- [ ] Wired ethernet on the ESP32: The ESP32 has an inbuild MAC which does only need an external PHY. Using a MAC+PHY (as the Wiz5500) gives problems with the default libraries. An altered version of the code is currently being tested and will be merged with the tree if found working.
+- [ ] SSL store: The given code uses http**s**. Every time a message thas to be transmitted or received through Azure, the certificate is checked. This certificate is saved in the header file of the azure code.
 ```
 static const char rootCACertificateCentral[] PROGMEM = R"EOF(
 -----BEGIN CERTIFICATE-----
