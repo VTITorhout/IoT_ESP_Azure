@@ -303,7 +303,7 @@ AZURE_REP IoT::receive(String& methodName,String& payload){
 		endPoint = "/devices/" + (String)deviceId + "/messages/deviceBound?api-version=2020-03-13";
 		String response = exeHttpRequest(buildHttpRequest("GET", ""));
 		//Serial.println(response);
-		methodName = splitStringByIndex(splitStringByIndex(response, ':', 13),'\r',0);
+		methodName = splitStringByIndex(splitStringByIndex(response, ':', 14),'\r',0);
 		methodName = methodName.substring(1, methodName.length());
 		payload = "{" + splitStringByIndex(splitStringByIndex(response, '{', 1),'}',0);
 		if(!useCentral){
