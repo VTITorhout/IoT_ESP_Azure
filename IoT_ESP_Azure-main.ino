@@ -96,6 +96,7 @@ void setupNetwork() {
 		Serial.println(Ethernet.localIP());
 	#else
 		//use WiFi
+		uint8_t connectCnt;
 		Serial.println("WIFI:\tsetup");
 		WiFi.mode(WIFI_STA);
 		//create hostname for device, based on prefix and mac
@@ -109,9 +110,15 @@ void setupNetwork() {
 		#endif
 		Serial.print("\tconnecting ");
 		WiFi.begin(WIFI_SSID, WIFI_PSK);	//set credentials in config.h
+		connectCnt = 0;
 		while (WiFi.status() != WL_CONNECTED) {
-			delay(250);
-			Serial.print(".");
+			if(connectCnt>60){	//WiFi does not get connected once in a while
+				ESP.restart();
+			}else{
+				connectCnt++;
+				delay(250);
+				Serial.print(".");
+			}
 		}
 		Serial.print("\n\tGot wireless IP: ");
 		Serial.println(WiFi.localIP());
