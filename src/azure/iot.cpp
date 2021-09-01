@@ -203,7 +203,13 @@ AZURE_REP IoT::connectToAzure(){
 	#if defined(ARDUINO_ARCH_ESP8266)
 	//tlcCert will only live inside if...
 		if(useCentral){
-			BearSSL::X509List tlsCert(rootCACertificateCentral);
+			if(azureInitialised){
+				//connect to hub retrieved from DPS
+				BearSSL::X509List tlsCert(rootCACertificateHub);
+			}else{
+				//connect to DPS
+				BearSSL::X509List tlsCert(rootCACertificateCentral);
+			}
 			tlsClient.setTrustAnchors(&tlsCert);
 			tlsClient.connect(host, 443);
 		}else{
@@ -213,7 +219,13 @@ AZURE_REP IoT::connectToAzure(){
 		}
     #elif defined(ARDUINO_ARCH_ESP32)
         if(useCentral){
-			tlsClient.setCACert(rootCACertificateCentral);
+			if(azureInitialised){
+				//connect to hub retrieved from DPS
+				tlsClient.setCACert(rootCACertificateHub);
+			}else{
+				//connect to DPS
+				tlsClient.setCACert(rootCACertificateCentral);
+			}
 		}else{
 			tlsClient.setCACert(rootCACertificateHub);
 		}
