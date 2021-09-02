@@ -6,31 +6,31 @@ The code was initialy developed and released as a research project, financed by 
 
 The first initial release does work on either the ESP8266 or the ESP32. Various options are available, but some are not fully implemented:
 
-Option| ESP8266 | ESP32
---- | ---
-Azure HUB | X | X
-Azure Central | X | X
-WiFi | X | X
-Ethernet (Wiz5500) | X | /
-SSL store | / | /
+| Option| ESP8266 | ESP32 |
+| ---: | :---: | :---: |
+| Azure HUB | X | X |
+| Azure Central | X | X |
+| WiFi | X | X |
+| Ethernet (Wiz5500) | X | \/ |
+| SSL store | \/ | \/ |
 
 The code should work with only a few changes, mainly in the `config.h` file:
-### &ensp;Global configuration
-* &ensp;When using WiFi, you should ofcourse provide the SSID to connect to `#define WIFI_SSID "YOUR-SSID-HERE"`. When a password is needed to connect to the SSID, also provide `#define WIFI_PSK "YOUR-PSWD-HERE"`
-* &ensp;When using Ethernet, choose for using Ethernet instead of WiFi by providing `#define USE_LAN true`. When set to another value then `true`, WiFi will be used. If this define is not provided, WiFi will be used.
-* &ensp;The Ethernet relies on the Wiz5500 chip connected to the SPI bus. There are sufficient examples on how  to connect on the internet. An [example](https://esp8266hints.wordpress.com/2018/02/13/adding-an-ethernet-port-to-your-esp-revisited/) can be found here. The CS line can be choosen freely, but must be provided by `#define ETH_CS	x`, where x is the pin on the ESP8266 being used. The reset is optional for the ESP8266 but will be included in the ESP32 version. 
+### Global configuration
+* When using WiFi, you should ofcourse provide the SSID to connect to `#define WIFI_SSID "YOUR-SSID-HERE"`. When a password is needed to connect to the SSID, also provide `#define WIFI_PSK "YOUR-PSWD-HERE"`
+* When using Ethernet, choose for using Ethernet instead of WiFi by providing `#define USE_LAN true`. When set to another value then `true`, WiFi will be used. If this define is not provided, WiFi will be used.
+* The Ethernet relies on the Wiz5500 chip connected to the SPI bus. There are sufficient examples on how  to connect on the internet. An [example](https://esp8266hints.wordpress.com/2018/02/13/adding-an-ethernet-port-to-your-esp-revisited/) can be found here. The CS line can be choosen freely, but must be provided by `#define ETH_CS	x`, where x is the pin on the ESP8266 being used. The reset is optional for the ESP8266 but will be included in the ESP32 version. 
 
-### &ensp;Azure configuration
-&ensp;There are a few options which can be configured:
-* &ensp;`#define IOT_CENTRAL false` will configure the code to use Azure HUB. Is this setting will be placed on true, then Azure CENTRAL will be used. See Azure credentials (further on) to provide the needed credentials to connect to Azure.
-* &ensp;`#define SAS_RENEW	15` is the time given in minutes between SAS ([Shared Access Signatures](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview)) renewals. When your SAS is compromised, the attacker can only use it for the maximum of the given time. 
-* &ensp;`#define IOT_UPDATE	300` is the time given in seconds between transmitting messages. The demo code does transmit a JSON based message with a given interval. 
-* &ensp;`#define POLL_TIME	60` is the time given in seconds to check for new messages. Messages transmitted from the cloud to the device will be queued. The ESP will check if messages are enqueued every given interval.
+### Azure configuration
+There are a few options which can be configured:
+* `#define IOT_CENTRAL false` will configure the code to use Azure HUB. Is this setting will be placed on true, then Azure CENTRAL will be used. See Azure credentials (further on) to provide the needed credentials to connect to Azure.
+* `#define SAS_RENEW	15` is the time given in minutes between SAS ([Shared Access Signatures](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview)) renewals. When your SAS is compromised, the attacker can only use it for the maximum of the given time. 
+* `#define IOT_UPDATE	300` is the time given in seconds between transmitting messages. The demo code does transmit a JSON based message with a given interval. 
+* `#define POLL_TIME	60` is the time given in seconds to check for new messages. Messages transmitted from the cloud to the device will be queued. The ESP will check if messages are enqueued every given interval.
 
-### &ensp;Azure credentials
-&ensp;Depending on using HUB or CENTRAL, the correct credentials should be given.
-* &ensp;For HUB, only one connection string should be provided. This connection string does contain all needed settings (HUB connection point, HUB device name and HUB SAS). Provide this in the following way `const char* primaireVerbindingsreeks = "HostName=xyz.azure-devices.net;DeviceId=ESP8266;SharedAccessKey=XcDOTsMyDhfFrkKu/WuajID4nx5gdrhfc1InPrLuER8=";`
-* &ensp;For CENTRAL, the three different settings should be provided seperately. `const char* SCOPE_ID = "0ne00241B52";`, `const char* DEVICE_ID = "1oikfewjvtb";` and `const char* DEVICE_KEY = "omvqlYa9x6+uZBGfNdfhghAjv8kRQMVaBzroOc0NDCes=";`.
+### Azure credentials
+Depending on using HUB or CENTRAL, the correct credentials should be given.
+* For HUB, only one connection string should be provided. This connection string does contain all needed settings (HUB connection point, HUB device name and HUB SAS). Provide this in the following way `const char* primaireVerbindingsreeks = "HostName=xyz.azure-devices.net;DeviceId=ESP8266;SharedAccessKey=XcDOTsMyDhfFrkKu/WuajID4nx5gdrhfc1InPrLuER8=";`
+* For CENTRAL, the three different settings should be provided seperately. `const char* SCOPE_ID = "0ne00241B52";`, `const char* DEVICE_ID = "1oikfewjvtb";` and `const char* DEVICE_KEY = "omvqlYa9x6+uZBGfNdfhghAjv8kRQMVaBzroOc0NDCes=";`.
 All settings can be found in the [Azure Portal](https://azure.microsoft.com/nl-nl/features/azure-portal/). 
 
 ## Future releases
