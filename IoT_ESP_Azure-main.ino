@@ -135,8 +135,8 @@ String buildPayload() {
   ssidPrefixMac(&prefixedMac[0], "IoT");  //create unique device name
   String json = "{\"device\":\""    + (String)prefixedMac +
                 "\",\"timestamp\":\"" + time(nullptr) +
-                "\",\"waarde1\":\"" + random(-2500, 8500)/100.0 +
-                "\",\"waarde2\":\"" + random(0, 100) +
+                "\",\"temp\":\"" + random(-2500, 8500)/100.0 +
+                "\",\"hum\":\"" + random(0, 100) +
                 "\"}";
   return json;
 } // buildPayload
