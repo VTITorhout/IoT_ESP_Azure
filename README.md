@@ -6,13 +6,13 @@ The code was initialy developed and released as a research project, financed by 
 
 The first initial release does work on either the ESP8266 or the ESP32. Various options are available, but some are not fully implemented:
 
-| Option| ESP8266 | ESP32 |
-| --- | --- |
-| Azure HUB | X | X |
-| Azure Central | X | X |
-| WiFi | X | X |
-| Ethernet (Wiz5500) | X | / |
-| SSL store | / | / |
+Option| ESP8266 | ESP32
+--- | ---
+Azure HUB | X | X
+Azure Central | X | X
+WiFi | X | X
+Ethernet (Wiz5500) | X | /
+SSL store | / | /
 
 The code should work with only a few changes, mainly in the `config.h` file:
 ### &ensp;Global configuration
